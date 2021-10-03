@@ -42,3 +42,5 @@ bind '"\e[1;2C": forward-word'
 # User specific aliases and functions
 [ -f $XDG_CONFIG_HOME/bash/.bash_aliases ] && source $XDG_CONFIG_HOME/bash/.bash_aliases
 [ -f $XDG_CONFIG_HOME/bash/.secrets ] && source $XDG_CONFIG_HOME/bash/.secrets
+
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash

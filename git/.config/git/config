@@ -12,7 +12,7 @@
 	acommit = commit -am
 	co = checkout
 	nbranch = checkout -b
-	aadd = add -A
+	aadd = add -Av
 	amend = commit --amend --no-edit
 [format]
 	pretty = short

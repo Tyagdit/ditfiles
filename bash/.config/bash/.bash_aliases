@@ -42,7 +42,7 @@ alias tree="exa -laF --group-directories-first --tree --level=2"
 alias lg="exa -laF --group-directories-first --git --git-ignore"
 alias treeg="exa -laF --group-directories-first --git --git-ignore --tree --level=2"
 alias ..="cd .."
-alias mkdir="mkdir -v"
+alias mkdir="mkdir -pv"
 alias please="sudo"
 
 # git
