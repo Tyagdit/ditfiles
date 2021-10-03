@@ -25,9 +25,6 @@ export EDITOR="nvim"
 
 export LESSHISTFILE="$XDG_CACHE_HOME/.lesshst"
 
-[ ! -d $XDG_CONFIG_HOME/git ] && mkdir -p $XDG_CONFIG_HOME/git
-# export GIT_CONFIG="$XDG_CONFIG_HOME/git/.gitconfig"
-
 # WSL
 if [ -n "$WSL_DISTRO_NAME" ]; then
     export USERPROFILE=$(wslpath "$(cmd.exe /c echo %userprofile% 2> /dev/null)")
