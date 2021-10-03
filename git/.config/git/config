@@ -1,0 +1,20 @@
+[user]
+	email = tyagdit@gmail.com
+	name = tyagdit
+[core]
+	editor = nvim
+[diff]
+	tool = nvimdiff
+[difftool "nvimdiff"]
+	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[alias]
+	olog = log --graph --oneline
+	acommit = commit -am
+	co = checkout
+	nbranch = checkout -b
+	aadd = add -A
+	amend = commit --amend --no-edit
+[format]
+	pretty = short
+[init]
+	defaultBranch = master
