@@ -22,6 +22,8 @@ export HISTFILESIZE=9000
 export HISTCONTROL=ignoreboth
 
 export EDITOR="nvim"
+export MANROFFOPT="-c"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export LESSHISTFILE="$XDG_CACHE_HOME/.lesshst"
 
