@@ -11,3 +11,5 @@ source "$XDG_DATA_HOME/fzf/key-bindings.bash"
 export FZF_DEFAULT_OPTS='--height 30% --layout=reverse --border --multi --info=hidden --cycle'
 export FZF_DEFAULT_COMMAND='fd --hidden --no-ignore'
 export FZF_COMPLETION_TRIGGER='~~'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"

@@ -43,6 +43,10 @@ alias lg="exa -laF --group-directories-first --git --git-ignore"
 alias treeg="exa -laF --group-directories-first --git --git-ignore --tree --level=2"
 alias ..="cd .."
 alias mkdir="mkdir -pv"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -Iv"
+alias grep="grep -rnH --color=auto"
 alias please="sudo"
 
 # git

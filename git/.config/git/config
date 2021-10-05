@@ -3,17 +3,22 @@
 	name = tyagdit
 [core]
 	editor = nvim
+	whitespace = --help
 [diff]
 	tool = nvimdiff
 [difftool "nvimdiff"]
 	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[difftool]
+	prompt = true
 [alias]
 	olog = log --graph --oneline
-	acommit = commit -am
+	acommit = !"git add -A && git commit -am"
 	co = checkout
 	nbranch = checkout -b
+	rbranch = branch -d
 	aadd = add -Av
 	amend = commit --amend --no-edit
+	ostatus = status -sb --ahead-behind
 [format]
 	pretty = short
 [init]
