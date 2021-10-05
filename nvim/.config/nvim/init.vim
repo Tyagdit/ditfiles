@@ -195,6 +195,7 @@ nmap <leader>nn :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '>
 " ---------------------------------------------------------------------------------------------------------------------
 
 
+set termguicolors
 set background=dark
 colorscheme edge
 
