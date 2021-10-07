@@ -25,6 +25,8 @@ export EDITOR="nvim"
 export MANROFFOPT="-c"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+
 export LESSHISTFILE="$XDG_CACHE_HOME/.lesshst"
 
 # WSL
@@ -32,8 +34,6 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
     export USERPROFILE=$(wslpath "$(cmd.exe /c echo %userprofile% 2> /dev/null)")
 fi
 
-# Get the aliases and functions
 if [ -f ~/.bashrc ]; then
 	. ~/.bashrc
 fi
-

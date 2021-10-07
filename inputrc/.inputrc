@@ -1,0 +1,19 @@
+$include /etc/inputrc
+
+# Case insensitive tab completion
+set completion-ignore-case on
+
+# Single tab partially completes and shows all options
+set show-all-if-ambiguous on
+
+# Perform partial completion on the first Tab press, and
+# only start cycling full results on the second Tab press
+set menu-complete-display-prefix on
+
+# shift + arrows to go back and forth one word at a time
+"\e[1;2D": backward-word
+"\e[1;2C": forward-word
+
+# Cycle through completions inline 
+Tab: menu-complete
+"\e[Z": menu-complete-backward

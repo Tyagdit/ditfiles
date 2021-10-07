@@ -46,7 +46,7 @@ alias mkdir="mkdir -pv"
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -Iv"
-alias grep="grep -rnH --color=auto"
+alias grep="grep -nH --color=auto"
 alias please="sudo"
 
 # git
