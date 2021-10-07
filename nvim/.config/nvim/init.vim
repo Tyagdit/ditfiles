@@ -20,6 +20,7 @@ set splitright              " open new split panes to right
 set noshowmode              " don't show mode, the statusline color indicates insert and paste mode
 set gdefault                " use the g flag in substitute by default
 set autoread                " no message when the current file was changed outside of Vim
+set updatetime=250          " decrease update time
 set incsearch hlsearch      " highlight search while typing it out
 set autoindent smartindent  " smart indent
 set ignorecase smartcase    " ignore case unless you type uppercase
@@ -117,10 +118,12 @@ nnoremap <leader><leader> :
 " nnoremap <UP> g<UP>
 " nnoremap k gk
 " nnoremap <DOWN> g<DOWN>
-" nnoremap 0 g0
-" nnoremap <HOME> g<HOME>
-" nnoremap $ g$
-" nnoremap <END> g<END>
+
+" actually go to the end
+nnoremap 0 g0
+nnoremap <HOME> g<HOME>
+nnoremap $ g$
+nnoremap <END> g<END>
 
 " Messes up undo
 " inoremap <UP> <CMD>norm gk<CR>
@@ -277,6 +280,14 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
 end
+
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  virtual_text = false,
+  update_in_insert = true,
+})
+
+-- Show line diagnostics automatically on CursorHold
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})]]
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
