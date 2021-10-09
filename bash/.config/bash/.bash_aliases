@@ -1,7 +1,42 @@
-# Programs
+# Abbreviations
+alias l="exa -laF --group-directories-first"
+alias tree="exa -laF --group-directories-first --tree --level=2"
+alias lg="exa -laF --group-directories-first --git --git-ignore"
+alias treeg="exa -laF --group-directories-first --git --git-ignore --tree --level=2"
+
+alias ..="cd .."
+alias mkdir="mkdir -pv"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -Iv"
+alias grep="grep -nH --color=auto"
+alias please="sudo"
+
+alias vv="nvim $XDG_CONFIG_HOME/nvim/init.vim"
+alias vb="nvim ~/.bashrc"
 alias htop="htop --tree"
+alias dock="docker"
+alias dc="docker-compose"
+
+
+# git
+alias gdiff="git diff --name-only --diff-filter=d | xargs bat --diff"
+
+
+# Python
+alias act="source venv/bin/activate"
+alias py="python3 -q"
+alias python="python3 -q"
+alias pip="pip3"
+
+
+# WSL
+alias open="wslview"
+alias cdwin="cd $USERPROFILE/Desktop"
+
+
+# Functions
 mkcd () { mkdir -p -v $1; cd $1; }
-alias vv="nvim ~/.config/nvim/init.vim"
 
 0x0 () {
 	if [[ -n $@  ]];
@@ -32,32 +67,5 @@ ranger-cd () {
 	# boot
 	rm -f -- "$tempfile"
 }
-
 # This binds Ctrl-O to ranger-cd:
 bind '"\C-o":"ranger-cd\C-m"'
-
-# Abbreviations
-alias l="exa -laF --group-directories-first"
-alias tree="exa -laF --group-directories-first --tree --level=2"
-alias lg="exa -laF --group-directories-first --git --git-ignore"
-alias treeg="exa -laF --group-directories-first --git --git-ignore --tree --level=2"
-alias ..="cd .."
-alias mkdir="mkdir -pv"
-alias cp="cp -iv"
-alias mv="mv -iv"
-alias rm="rm -Iv"
-alias grep="grep -nH --color=auto"
-alias please="sudo"
-
-# git
-alias gdiff="git diff --name-only --diff-filter=d | xargs bat --diff"
-
-# Python
-alias act="source venv/bin/activate"
-alias py="python3 -q"
-alias python="python3 -q"
-alias pip="pip3"
-
-# WSL
-alias open="wslview"
-alias cdwin="cd $USERPROFILE/Desktop"
