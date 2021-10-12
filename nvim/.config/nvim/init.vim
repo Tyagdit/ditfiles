@@ -297,68 +297,32 @@ for _, lsp in ipairs(servers) do
         on_attach = on_attach,
         flags = {
             debounce_text_changes = 150,
-            }
         }
+    }
 end
 
-nvim_lsp.diagnosticls.setup {
-    on_attach = om_attach,
-    filetypes = { 'python' },
-    init_options = {
-        linters = {
-            flake8 = {
-                command = 'flake8',
-                debounce = 100,
-                args = { '--format=%(row)d,%(col)d,%(code).1s,%(code)s: %(text)s', '-' },
-                offsetLine = 0,
-                offsetColumn = 0,
-                sourceName = 'flake8',
-                formatLines = 1,
-                formatPattern = {
-                    '(\\d+),(\\d+),([A-Z]),(.*)(\\r|\\n)*$',
-                    {
-                        line = 1,
-                        column = 2,
-                        security = 3,
-                        message = 4
+nvim_lsp.efm.setup {
+    filetypes = { "python" },
+    settings = {
+        rootMarkers = {".git/"},
+        languages = {
+            python = {
+                {
+                    lintCommand = "flake8 --stdin-display-name ${INPUT} -",
+                    lintStdin = true,
+                    lintFormats = { "%f:%l:%c: %m" }
+                },
+                {
+                    lintCommand = "mypy --show-column-numbers",
+                    lintFormats = {
+                        "%f:%l:%c: %trror: %m",
+                        "%f:%l:%c: %tarning: %m",
+                        "%f:%l:%c: %tote: %m"
                     }
-                },
-                securities = {
-                    W = 'warning',
-                    E = 'error',
-                    F = 'error',
-                    C = 'error',
-                    N = 'error'
-                }
-            },
-            mypy = {
-                sourceName = 'mypy',
-                command = 'mypy',
-                args = {
-                    '--no-color-output',
-                    '--no-error-summary',
-                    '--show-column-numbers',
-                    '--follow-imports=silent',
-                    '%file'
-                },
-                formatPattern = {
-                    '^.*:(\\d+?):(\\d+?): ([a-z]+?): (.*)$',
-                    {
-                        line = 1,
-                        column = 2,
-                        security = 3,
-                        message = 4
-                    }
-                },
-                securities = {
-                    error = 'error'
                 }
             }
-        },
-        filetypes = {
-            python = { 'flake8', 'mypy' }
         }
-    },
+    }
 }
 
 vim.g.bubbly_statusline = {
