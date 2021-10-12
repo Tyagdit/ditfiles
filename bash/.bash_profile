@@ -25,9 +25,11 @@ export EDITOR="nvim"
 export MANROFFOPT="-c"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
-
 export LESSHISTFILE="$XDG_CACHE_HOME/.lesshst"
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+
+export PATH="$PATH:/usr/local/go/bin:$XDG_DATA_HOME/go/bin"
+export GOPATH="$XDG_DATA_HOME/go"
 
 # WSL
 if [ -n "$WSL_DISTRO_NAME" ]; then
