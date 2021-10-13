@@ -1,9 +1,8 @@
 [user]
 	email = tyagdit@gmail.com
-	name = tyagdit
+	name = Tyagraj Desigar
 [core]
 	editor = nvim
-	whitespace = --help
 [diff]
 	tool = nvimdiff
 [difftool "nvimdiff"]
