@@ -20,7 +20,7 @@ set splitright              " open new split panes to right
 set noshowmode              " don't show mode, the statusline color indicates insert and paste mode
 set gdefault                " use the g flag in substitute by default
 set autoread                " no message when the current file was changed outside of Vim
-set updatetime=250          " decrease update time
+set updatetime=800          " Update time for diagnostic hover
 set incsearch hlsearch      " highlight search while typing it out
 set autoindent smartindent  " smart indent
 set ignorecase smartcase    " ignore case unless you type uppercase
@@ -61,6 +61,7 @@ Plug 'talek/obvious-resize'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
+Plug 'christoomey/vim-tmux-navigator'
 
 " file operations
 Plug 'junegunn/fzf.vim'
@@ -151,11 +152,12 @@ vnoremap <silent> <C-K> :m '<-2<CR>gv=gv
 noremap <ScrollWheelUp>     6<C-Y>
 noremap <ScrollWheelDown>   6<C-E>
 
-" move between splits
-nnoremap <silent> <leader><Up> :wincmd k<CR>
-nnoremap <silent> <leader><Down> :wincmd j<CR>
-nnoremap <silent> <leader><Left> :wincmd h<CR>
-nnoremap <silent> <leader><Right> :wincmd l<CR>
+" move between splits and tmux panes with the same keys
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <M-Left> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-Down> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-Up> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-Right> :TmuxNavigateRight<cr>
 
 " resize splits
 nnoremap <silent> <M-k> :ObviousResizeUp 2<CR>
@@ -217,6 +219,8 @@ set guicursor=n-c-i-ci-ve:ver25-blinkwait300-blinkon200-blinkoff150,r-cr-o:hor20
 " ---------------------------------------------------------------------------------------------------------------------
 
 
+" use gx to open files using wslview
+let g:netrw_browsex_viewer="wslview"
 " file browser options
 let g:netrw_liststyle=3         " tree style listing
 " cant change the tree character
@@ -272,6 +276,7 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
     buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
@@ -291,7 +296,7 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diag
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'jedi_language_server', 'gopls' }
+local servers = { 'gopls' }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
         on_attach = on_attach,
@@ -301,29 +306,30 @@ for _, lsp in ipairs(servers) do
     }
 end
 
-nvim_lsp.efm.setup {
-    filetypes = { "python" },
-    settings = {
-        rootMarkers = {".git/"},
-        languages = {
-            python = {
-                {
-                    lintCommand = "flake8 --stdin-display-name ${INPUT} -",
-                    lintStdin = true,
-                    lintFormats = { "%f:%l:%c: %m" }
-                },
-                {
-                    lintCommand = "mypy --show-column-numbers",
-                    lintFormats = {
-                        "%f:%l:%c: %trror: %m",
-                        "%f:%l:%c: %tarning: %m",
-                        "%f:%l:%c: %tote: %m"
-                    }
-                }
-            }
-        }
-    }
-}
+-- nvim_lsp.efm.setup {
+--     filetypes = { "python" },
+--     init_options = { codeAction = true },
+--     settings = {
+--         rootMarkers = {".git/"},
+--         languages = {
+--             python = {
+--                 {
+--                     lintCommand = "flake8 --stdin-display-name ${INPUT} -",
+--                     lintStdin = true,
+--                     lintFormats = { "%f:%l:%c: %m" }
+--                 },
+--                 {
+--                     lintCommand = "mypy --show-column-numbers",
+--                     lintFormats = {
+--                         "%f:%l:%c: %trror: %m",
+--                         "%f:%l:%c: %tarning: %m",
+--                         "%f:%l:%c: %tote: %m"
+--                     }
+--                 }
+--             }
+--         }
+--     }
+-- }
 
 vim.g.bubbly_statusline = {
     'paste',
