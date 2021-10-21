@@ -62,6 +62,8 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'lukas-reineke/indent-blankline.nvim'
+set colorcolumn=500 " https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806374954
 
 " file operations
 Plug 'junegunn/fzf.vim'
@@ -84,6 +86,13 @@ let g:fzf_action = {
 \   'ctrl-s': 'split',
 \   'ctrl-v': 'vsplit',
 \ }
+
+" indentline setup
+let g:indent_blankline_char_list = ['│', '¦']
+let g:indent_blankline_show_first_indent_level = v:false
+let g:indent_blankline_filetype_exclude = ['help']
+let g:indent_blankline_buftype_exclude = ['terminal']
+let g:indent_blankline_show_trailing_blankline_indent = v:false
 
 " " ALE (just for linting)
 " let g:ale_linters_explicit=1
