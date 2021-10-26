@@ -1,4 +1,33 @@
 {
+    "suggest.disableMenuShortcut": true,
+    "suggest.completionItemKindLabels": {
+        "text": "",
+        "method": "method",
+        "function": "func",
+        "constructor": "func",
+        "field": "field",
+        "variable": "var",
+        "class": "cls",
+        "interface": "inter",
+        "module": "mod",
+        "property": "prop",
+        "unit": "unit",
+        "value": "val",
+        "enum": "enum",
+        "keyword": "keyword",
+        "snippet": "snip",
+        "color": "color",
+        "file": "file",
+        "reference": "ref",
+        "folder": "dir",
+        "enumMember": "member",
+        "constant": "const",
+        "struct": "struct",
+        "event": "event",
+        "operator": "op",
+        "typeParameter": "",
+        "default": ""
+    },
     "languageserver": {
         "efm": {
             "command": "efm-langserver",
