@@ -2,7 +2,7 @@
 
 ### Installing
 
-Use (GNU Stow)[https://www.gnu.org/software/stow]
+Use [GNU Stow](https://www.gnu.org/software/stow)
 
 The `--no-folding` option for stow is set by default in `.stowrc`.
 This means that instead of descending as low as possible in a stow directory to symlink, stow will descend all the way.
@@ -23,5 +23,5 @@ Add a `.secrets` file in `bash/.config/bash/` with secret env vars to be sourced
 
 ### Inputrc
 
-According to the (readline docs)[https://man7.org/linux/man-pages/man3/readline.3.html] the `INUTRC` env var 
+According to the [readline docs](https://man7.org/linux/man-pages/man3/readline.3.html) the `INUTRC` env var 
 should change the location of the readline config but for some inexplicable reason this does not work so its staying in `$HOME`
