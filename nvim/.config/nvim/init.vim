@@ -25,12 +25,12 @@ set incsearch hlsearch      " highlight search while typing it out
 set autoindent smartindent  " smart indent
 set ignorecase smartcase    " ignore case unless you type uppercase
 set number relativenumber   " enable relative line numbering
-set scrolloff=8             " vertical offset for scrolling
+set scrolloff=8 siso=5      " offsets for scrolling
 set pastetoggle=<F10>       " paste mode to allow for pasting multiline stuff without messing it up
-set shortmess+=c            " dont show info or warnings when using completion
+set shortmess+=Ic           " dont show info or warnings when using completion and disable intro
 set formatoptions-=o        " change auto formating of comments (doesn't work always due to filetype after-plugins)
 set signcolumn=number       " show sign column in number column
-set inccommand=nosplit      " show live effects of substitute(neovim only)
+set inccommand=split        " show live effects of substitute(neovim only)
 set selection=exclusive     " better behaviour for visual mode selection
 set virtualedit=onemore     " allow moving cursor past last character
 set clipboard=unnamedplus   " use system clipboard when yanking and deleting (v slow)
@@ -182,13 +182,15 @@ set background=dark
 colorscheme edge
 
 hi Normal guifg=#bbc2cf guibg=#1c1e24
-hi StatusLine guifg=#bbc2cf guibg=#1c1e24
-hi MatchParen guifg=#111111 guibg=#b1b1b1
 hi String guifg=#5b626f
 hi EndOfBuffer guifg=#1c1e24 guibg=#1c1e24
+" hi StatusLine guifg=#bbc2cf guibg=#1c1e24
+" hi MatchParen guifg=#111111 guibg=#b1b1b1
 
 " cursor style
 set guicursor=n-c-i-ci-ve:ver25-blinkwait300-blinkon200-blinkoff150,r-cr-o:hor20
+
+set fillchars=eob:\ ,diff:\ 
 
 
 " ---------------------------------------------------------------------------------------------------------------------
