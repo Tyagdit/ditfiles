@@ -18,10 +18,10 @@ The `programs` list is incomplete and does not include versions.
 
 ### Bash
 
-Add a `.secrets` file in `bash/.config/bash/` with secret env vars to be sourced at startup.
+Add a `.secrets` file in `bash/.config/bash` with secret env vars to be sourced at startup.
 
 
 ### Inputrc
 
-According to the [readline docs](https://man7.org/linux/man-pages/man3/readline.3.html) the `INUTRC` env var 
+According to the [readline docs](https://man7.org/linux/man-pages/man3/readline.3.html), the `INPUTRC` env var
 should change the location of the readline config but for some inexplicable reason this does not work so its staying in `$HOME`

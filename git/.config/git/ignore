@@ -1,3 +1,8 @@
+# Docker Compose
+docker-compose.local.yml
+docker-compose.local.yaml
+
+
 # Vim 
 ## Swap
 [._]*.s[a-v][a-z]
