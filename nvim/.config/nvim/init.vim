@@ -35,8 +35,9 @@ set selection=exclusive     " better behaviour for visual mode selection
 set virtualedit=onemore     " allow moving cursor past last character
 set clipboard=unnamedplus   " use system clipboard when yanking and deleting (v slow)
 set mouse=a                 " enable mouse usage
+set backupcopy=yes
 set undofile                " turn on persistent-undo
-set undodir=$XDG_STATE_HOME/nvim/undo       " directory where the undo files will be stored
+set undodir=$XDG_DATA_HOME/nvim/undo//      " directory where the undo files will be stored
 set completeopt=menuone,noinsert,noselect   " completion menu options
 
 let mapleader=" "
@@ -62,6 +63,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'tommcdo/vim-lion'
 Plug 'lukas-reineke/indent-blankline.nvim'
 set colorcolumn=500 " https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806374954
 
@@ -241,6 +243,7 @@ nmap <silent> [d <Plug>(coc-diagnostic-prev)
 nmap <silent> ]d <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 

@@ -36,9 +36,9 @@ alias cdwin="cd $USERPROFILE/Desktop"
 
 
 # Functions
-mkcd () { mkdir -p -v $1; cd $1; }
+mkcd() { mkdir -p -v $1; cd $1; }
 
-0x0 () {
+0x0() {
 	if [[ -n $@  ]];
 	then
 		curl -F"file=@$1" https://0x0.st | clip.exe
@@ -47,7 +47,7 @@ mkcd () { mkdir -p -v $1; cd $1; }
 	fi
 }
 
-ranger-cd () {
+ranger-cd() {
 	# create a temp file and store the name
 	tempfile="$(mktemp -t tmp.XXXXXX)"
 

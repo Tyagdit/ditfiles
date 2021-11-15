@@ -20,5 +20,7 @@
 	ostatus = status -sb --ahead-behind
 [format]
 	pretty = short
+[advice]
+	statusHints = false
 [init]
 	defaultBranch = master
