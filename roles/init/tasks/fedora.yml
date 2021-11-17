@@ -2,7 +2,6 @@
 - name: Install stow
   become: yes
   ansible.builtin.dnf:
-    update_cache: yes
     name: stow
     state: latest
 

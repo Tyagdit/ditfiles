@@ -2,7 +2,6 @@
 - name: Install neovim
   become: yes
   ansible.builtin.dnf:
-    update_cache: yes
     name:
       - neovim
       - python3-neovim

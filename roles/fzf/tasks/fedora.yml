@@ -2,7 +2,6 @@
 - name: Install fd
   become: yes
   ansible.builtin.dnf:
-    update_cache: yes
     name: fd-find
     state: latest
 

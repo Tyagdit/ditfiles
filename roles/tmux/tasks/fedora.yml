@@ -2,6 +2,5 @@
 - name: Install tmux
   become: yes
   ansible.builtin.dnf:
-    update_cache: yes
     name: tmux
     state: latest
