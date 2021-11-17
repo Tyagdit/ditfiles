@@ -1,18 +1,9 @@
 ---
-- name: Install stow
+- name: Install stow, git and python
   become: yes
   ansible.builtin.dnf:
-    name: stow
-    state: latest
-
-- name: Install git
-  become: yes
-  ansible.builtin.dnf:
-    name: git
-    state: latest
-
-- name: Install python
-  become: yes
-  ansible.builtin.dnf:
-    name: python3
+    name:
+      - stow
+      - git
+      - python3
     state: latest

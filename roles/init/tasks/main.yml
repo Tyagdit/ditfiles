@@ -2,12 +2,16 @@
 - import_tasks: fedora.yml
   when: ansible_distribution == "Fedora"
 
-- name: Install and update pip
+- name: Install pip
   ansible.builtin.command:
-    cmd: python -m ensurepip --upgrade && python -m pip install --upgrade pip
+    cmd: python -m ensurepip --upgrade
+
+- name: Update pip
+  ansible.builtin.command:
+    cmd: python -m pip install --upgrade pip
 
 - name: Ensure ditfiles are up to date
-  ignore_errors: "{{ check_mode }}"
+  # ignore_errors: "{{ check_mode }}"
   ansible.builtin.git:
     repo: "https://github.com/tyagdit/ditfiles"
     dest: "{{ playbook_dir }}"

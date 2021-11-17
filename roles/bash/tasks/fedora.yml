@@ -1,18 +1,9 @@
 ---
-- name: Install exa
+- name: Install exa, bat and ranger
   become: yes
   ansible.builtin.dnf:
-    name: exa
-    state: latest
-
-- name: Install bat
-  become: yes
-  ansible.builtin.dnf:
-    name: bat
-    state: latest
-
-- name: Install ranger
-  become: yes
-  ansible.builtin.dnf:
-    name: ranger
+    name:
+      - exa
+      - bat
+      - ranger
     state: latest
