@@ -1,0 +1,5 @@
+---
+- name: Stow git
+  ansible.builtin.command:
+    chdir: "{{ playbook_dir }}"
+    cmd: stow git

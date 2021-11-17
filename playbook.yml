@@ -1,0 +1,23 @@
+---
+- name: Install ditfiles
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ['vars/vars.yml', 'vars/default.yml']  # Order is important for overriding
+  roles:
+    - {role: init, tags: ['init']}
+    - {role: bash, tags: ['bash']}
+    - {role: docker, tags: ['docker'], when: install_docker}
+    - {role: fzf, tags: ['fzf']}
+    - {role: git, tags: ['git']}
+    - {role: inputrc, tags: ['inputrc']}
+    - {role: nvim, tags: ['nvim']}
+    - {role: tmux, tags: ['tmux']}
+    - {role: wget, tags: ['wget']}
+  tasks:
+    # - tags: ['test']
+    #   debug:
+    #     msg: "{{ install_docker }} {{ install_node }}"
+    - name: Post install instructions
+      debug:
+        msg: "Install tmux plugins with 'prefix+I' within tmux"

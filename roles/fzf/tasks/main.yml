@@ -1,0 +1,8 @@
+---
+- import_tasks: fedora.yml
+  when: ansible_distribution == "Fedora"
+
+- name: Stow fzf
+  ansible.builtin.command:
+    chdir: "{{ playbook_dir }}"
+    cmd: stow fzf

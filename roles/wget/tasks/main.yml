@@ -1,0 +1,5 @@
+---
+- name: Stow wget
+  ansible.builtin.command:
+    chdir: "{{ playbook_dir }}"
+    cmd: stow wget

@@ -1,0 +1,5 @@
+---
+- name: Stow inputrc
+  ansible.builtin.command:
+    chdir: "{{ playbook_dir }}"
+    cmd: stow inputrc

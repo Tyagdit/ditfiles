@@ -1,0 +1,13 @@
+---
+- import_tasks: fedora.yml
+  when: ansible_distribution == "Fedora"
+
+- name: Install tmux plugin manager
+  ansible.builtin.git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "{{ ansible_user_dir }}/.config/tmux/plugins/tpm"
+
+- name: Stow tmux
+  ansible.builtin.command:
+    chdir: "{{ playbook_dir }}"
+    cmd: stow tmux

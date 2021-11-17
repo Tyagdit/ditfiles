@@ -1,0 +1,19 @@
+---
+- name: Install stow
+  become: yes
+  ansible.builtin.dnf:
+    update_cache: yes
+    name: stow
+    state: latest
+
+- name: Install git
+  become: yes
+  ansible.builtin.dnf:
+    name: git
+    state: latest
+
+- name: Install python
+  become: yes
+  ansible.builtin.dnf:
+    name: python3
+    state: latest

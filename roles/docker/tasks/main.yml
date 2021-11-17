@@ -1,0 +1,37 @@
+---
+- import_tasks: fedora.yml
+  when: ansible_distribution == "Fedora"
+- import_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- name: Create "docker" group
+  become: yes
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Add remote user to "docker" group
+  become: yes
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Ensure Docker daemons starts on boot
+  become: yes
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  loop:
+    - docker.service
+    - containerd.service
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Install docker-compose
+  become: yes
+  ansible.builtin.get_url:
+    url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: +x

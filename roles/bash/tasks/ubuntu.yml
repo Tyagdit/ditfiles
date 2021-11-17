@@ -1,0 +1,17 @@
+# Incomplete
+---
+- name: Get latest exa version
+  community.general.github_release:
+    action: latest_release
+    user: ogham
+    repo: exa
+  register: exa_ver
+
+- name: Install exa
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: "https://github.com/ogham/exa/releases/download/{{ exa_ver['tag'] }}/exa-linux-x86_64-{{ exa_ver['tag'] }}.zip"
+    dest: /usr/local/bin
+    mode: +x
+    include: ["bin/exa"]
+    creates: /usr/local/bin/exa

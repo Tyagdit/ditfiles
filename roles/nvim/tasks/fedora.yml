@@ -1,0 +1,16 @@
+---
+- name: Install neovim
+  become: yes
+  ansible.builtin.dnf:
+    update_cache: yes
+    name:
+      - neovim
+      - python3-neovim
+    state: latest
+
+- name: Install node.js and npm
+  become: yes
+  ansible.builtin.dnf:
+    name: nodejs
+    state: latest
+  when: install_node

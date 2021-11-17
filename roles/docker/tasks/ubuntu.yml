@@ -1,0 +1,44 @@
+---
+# - name: Install aptitude using apt
+#   ansible.builtin.apt:
+#     name: aptitude
+#     state: latest
+#     update_cache: yes
+#     force_apt_get: yes
+
+- name: Install required packages for Docker on Ubuntu
+  become: yes
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: yes
+
+- name: Add Docker GPG apt Key
+  become: yes
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repository
+  become: yes
+  ansible.builtin.apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+    state: present
+
+- name: Install Docker
+  become: yes
+  ansible.builtin.apt:
+    update_cache: yes
+    name: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: latest
+  ignore_errors: "{{ ansible_check_mode }}"
