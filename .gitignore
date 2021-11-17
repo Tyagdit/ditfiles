@@ -1,2 +1,3 @@
 .secrets
 vars/vars.yml
+ansible.cfg
