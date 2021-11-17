@@ -1,4 +1,9 @@
 ---
+- name: Backup existing bash files
+  ignore_errors: yes
+  ansible.builtin.command:
+    cmd: mv .bashrc .bashrc.bk; mv .bash_profile .bash_profile.bk
+
 - import_tasks: fedora.yml
   when: ansible_distribution == "Fedora"
 
