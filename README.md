@@ -23,6 +23,7 @@ The `programs` list is incomplete and does not include versions.
 
 ### Bash
 
+Existing `.bashrc` and `.bash_profile` files are backed up
 Add a `.secrets` file in `bash/.config/bash` with secret env vars to be sourced at startup.
 
 
