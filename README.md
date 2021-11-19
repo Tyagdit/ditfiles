@@ -14,7 +14,7 @@ NOTE: If you have an existing environment in place, stuff might break
 ### Bash
 
 Remove existing `.bashrc` and `.bash_profile` or stowing them will fail.
-If it does, the rest of the setup continues but you will have to manually `stow bash` after taking care of existing files
+If it does, the rest of the setup continues but you will have to manually `stow bash` after taking care of existing files.
 Add a `.secrets` file in `bash/.config/bash` with secret env vars to be sourced at startup.
 
 
