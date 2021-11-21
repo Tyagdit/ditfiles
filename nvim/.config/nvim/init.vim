@@ -35,10 +35,11 @@ set selection=exclusive     " better behaviour for visual mode selection
 set virtualedit=onemore     " allow moving cursor past last character
 set clipboard=unnamedplus   " use system clipboard when yanking and deleting (v slow)
 set mouse=a                 " enable mouse usage
-set backupcopy=yes
 set undofile                " turn on persistent-undo
 set undodir=$XDG_DATA_HOME/nvim/undo//      " directory where the undo files will be stored
 set completeopt=menuone,noinsert,noselect   " completion menu options
+
+" set backupcopy=yes          " use modelines instead (https://nichir.in/posts/vim-cant-edit-files/)
 
 let mapleader=" "
 let g:python3_host_prog="$XDG_DATA_HOME/nvim/venv/bin/python3"

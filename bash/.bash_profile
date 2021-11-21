@@ -33,8 +33,16 @@ export GOPATH="$XDG_DATA_HOME/go"
 
 # WSL
 if [ -n "$WSL_DISTRO_NAME" ]; then
-    export USERPROFILE=$(wslpath "$(cmd.exe /c echo %userprofile% 2> /dev/null)")
+    # export USERPROFILE=$(wslpath "$(cmd.exe /c echo %userprofile% 2> /dev/null)")
+    export USERPROFILE="/mnt/c/Users/Aditya\ Desigar"
+
+    export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
+    export VAGRANT_WSL_WINDOWS_ACCESS_USER_HOME_PATH="/mnt/c/Users/Aditya Desigar"
+    export VAGRANT_WSL_DISABLE_VAGRANT_HOME="1"
+    export VAGRANT_HOME="/mnt/c/Users/Aditya Desigar/vagrant"
+    export VAGRANT_DEFAULT_PROVIDER="hyperv"
 fi
+
 
 if [ -f ~/.bashrc ]; then
 	. ~/.bashrc
