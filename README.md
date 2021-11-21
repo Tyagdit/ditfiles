@@ -2,6 +2,8 @@
 
 ### Installing
 
+#### With ansible
+
 - Install [ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html)
 - To change default variables
     - `cp vars/default.yml vars/vars.yml`
@@ -9,6 +11,13 @@
 - `ansible-playbook playbook.yml`
 
 NOTE: If you have an existing environment in place, stuff might break
+
+#### Manually with stow
+
+The `--no-folding` option for stow is set by default in `.stowrc`.
+This means that instead of descending as low as possible in a stow directory to symlink, stow will descend all the way.
+This allows the created directories to be used by other programs without polluting this repo.
+Also the default target directory is set to `$HOME`. Edit or remove `.stowrc` to change these options.
 
 
 ### Bash
