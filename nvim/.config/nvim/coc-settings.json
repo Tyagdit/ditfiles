@@ -28,32 +28,34 @@
         "typeParameter": "",
         "default": ""
     },
-    "languageserver": {
-        "efm": {
-            "command": "efm-langserver",
-            "args": [],
-            // custom config path
-            // "args": ["-c", "/path/to/your/config.yaml"],
-            "filetypes": ["python"],
-            "settings": {
-                "languages": {
-                    "python": [
-                        {
-                            "lintCommand": "flake8 --stdin-display-name ${INPUT} -",
-                            "lintStdin": true,
-                            "lintFormats": [ "%f:%l:%c: %m" ]
-                        },
-                        {
-                            "lintCommand": "mypy --show-column-numbers",
-                            "lintFormats": [
-                                "%f:%l:%c: %trror: %m",
-                                "%f:%l:%c: %tarning: %m",
-                                "%f:%l:%c: %tote: %m"
-                            ]
-                        }
-                    ]
-                }
-            }
-        }
-    }
+    "python.formatting.provider": "black",
+    /* "python.linting.mypyEnabled": true */
+    /* "languageserver": { */
+    /*     "efm": { */
+    /*         "command": "efm-langserver", */
+    /*         "args": [], */
+    /*         // custom config path */
+    /*         // "args": ["-c", "/path/to/your/config.yaml"], */
+    /*         "filetypes": ["python"], */
+    /*         "settings": { */
+    /*             "languages": { */
+    /*                 "python": [ */
+    /*                     { */
+    /*                         "lintCommand": "flake8 --stdin-display-name ${INPUT} -", */
+    /*                         "lintStdin": true, */
+    /*                         "lintFormats": [ "%f:%l:%c: %m" ] */
+    /*                     }, */
+    /*                     { */
+    /*                         "lintCommand": "mypy --show-column-numbers", */
+    /*                         "lintFormats": [ */
+    /*                             "%f:%l:%c: %trror: %m", */
+    /*                             "%f:%l:%c: %tarning: %m", */
+    /*                             "%f:%l:%c: %tote: %m" */
+    /*                         ] */
+    /*                     } */
+    /*                 ] */
+    /*             } */
+    /*         } */
+    /*     } */
+    /* } */
 }

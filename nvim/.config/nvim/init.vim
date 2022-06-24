@@ -39,7 +39,8 @@ set undofile                " turn on persistent-undo
 set undodir=$XDG_DATA_HOME/nvim/undo//      " directory where the undo files will be stored
 set completeopt=menuone,noinsert,noselect   " completion menu options
 
-" set backupcopy=yes          " use modelines instead (https://nichir.in/posts/vim-cant-edit-files/)
+set backupcopy=yes          " use modelines instead (https://nichir.in/posts/vim-cant-edit-files/)
+set hidden
 
 let mapleader=" "
 let g:python3_host_prog="$XDG_DATA_HOME/nvim/venv/bin/python3"
@@ -55,7 +56,7 @@ call plug#begin('$XDG_CONFIG_HOME/nvim/plugged')
 " theme
 let g:edge_diagnostic_line_highlight = 1
 let g:edge_better_performance = 1
-Plug 'sainnhe/edge', {'commit': 'e3b9bc1'}  " guy changed colors after this wtf
+Plug 'sainnhe/edge'", {'commit': 'e3b9bc1'}  " guy changed colors after this wtf
 Plug 'datwaft/bubbly.nvim'
 
 " QOL
@@ -89,7 +90,7 @@ let g:fzf_action = {
 \ }
 
 " indentline setup
-let g:indent_blankline_char_list = ['│', '|']
+let g:indent_blankline_char_list = ['▎', '▏']
 let g:indent_blankline_show_first_indent_level = v:false
 let g:indent_blankline_filetype_exclude = ['help']
 let g:indent_blankline_buftype_exclude = ['terminal']
@@ -113,16 +114,23 @@ nnoremap <leader><leader> :
 " actually go to the end
 nnoremap 0 g0
 nnoremap <HOME> g<HOME>
+nnoremap <S-HOME> <HOME>
 nnoremap $ g$
 nnoremap <END> g<END>
+nnoremap <S-END> <END>
 
 vnoremap > >gv
 vnoremap < <gv
 
-nnoremap <silent> ? :noh<CR>
+nnoremap <silent> <C-l> :noh<CR>
 nnoremap G Gzz
 noremap N Nzz
 noremap n nzz
+
+" file navigation
+nnoremap \ <C-^>
+nmap <silent> \| :20Lexplore<CR>
+
 
 " to move lines up and down like in sublime
 nnoremap <silent> <C-J> :m .+1<CR>==
@@ -150,7 +158,7 @@ nnoremap <silent> <M-h> :ObviousResizeLeft 2<CR>
 nnoremap <silent> <M-l> :ObviousResizeRight 2<CR>
 
 " replace without yanking selected text
-vnoremap <leader>p "_dP
+vnoremap p "_dP
 
 " fzf
 nnoremap <silent> <leader>ff :FZF<CR>
@@ -162,12 +170,12 @@ nmap <silent> <leader>ts :botright 9split term://bash<CR>
 nmap <silent> <leader>tv :botright 60vsplit term://bash<CR>
 
 " use tab for completion
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " open and reload vimrc
 nnoremap <silent> <leader>v :edit $MYVIMRC<CR>
-nnoremap <leader>r :source $MYVIMRC<CR>
+nnoremap <leader>r :source $MYVIMRC<CR>:noh<CR>
 
 " find symbol group info under the cursor
 nmap <leader>nn :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -184,7 +192,8 @@ set termguicolors
 set background=dark
 colorscheme edge
 
-hi Normal guifg=#bbc2cf guibg=#1c1e24
+" hi Normal guibg=#24262e
+hi Normal guibg=#1c1e24
 hi String guifg=#5b626f
 hi EndOfBuffer guifg=#1c1e24 guibg=#1c1e24
 " hi StatusLine guifg=#bbc2cf guibg=#1c1e24
@@ -226,27 +235,10 @@ com! -range=% FormatJSON <line1>,<line2>!python3 -m json.tool
 " ---------------------------------------------------------------------------------------------------------------------
 
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-nmap <silent> [d <Plug>(coc-diagnostic-prev)
-nmap <silent> ]d <Plug>(coc-diagnostic-next)
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
-
-nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -258,9 +250,30 @@ function! s:show_documentation()
   endif
 endfunction
 
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <cr>
+    \ pumvisible() ? coc#_select_confirm() :
+    \ "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+nmap <silent> gd         <Plug>(coc-definition)
+nmap <silent> gr         <Plug>(coc-references)
+nmap <silent> <leader>[  <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>]  <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>e  <plug>(coc-diagnostic-info)
+nmap <silent> <leader>c  <plug>(coc-codeaction-line)
+nmap <silent> <leader>rn <Plug>(coc-rename)
+nmap <silent> <leader>f  <Plug>(coc-format-selected)
+xmap <silent> <leader>f  <Plug>(coc-format-selected)
+
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-let g:coc_global_extensions = ['coc-jedi', 'coc-go', 'coc-json']
+let g:coc_global_extensions = ['coc-pyright', 'coc-go', 'coc-json']
 
 lua << EOF
 vim.g.bubbly_statusline = {
