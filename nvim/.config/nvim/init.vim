@@ -1,4 +1,4 @@
-" NeoVim 0.5.0
+" NeoVim 0.7.2
 
 
 " ---------------------------------------------------------------------------------------------------------------------
@@ -34,11 +34,11 @@ set inccommand=split        " show live effects of substitute(neovim only)
 set selection=exclusive     " better behaviour for visual mode selection
 set virtualedit=onemore     " allow moving cursor past last character
 set clipboard=unnamedplus   " use system clipboard when yanking and deleting (v slow)
+set laststatus=3            " Enable global statusline
 set mouse=a                 " enable mouse usage
 set undofile                " turn on persistent-undo
 set undodir=$XDG_DATA_HOME/nvim/undo//      " directory where the undo files will be stored
 set completeopt=menuone,noinsert,noselect   " completion menu options
-set laststatus=3            " Enable global statusline
 
 set backupcopy=yes          " use modelines instead (https://nichir.in/posts/vim-cant-edit-files/)
 set hidden
@@ -56,7 +56,6 @@ call plug#begin('$XDG_CONFIG_HOME/nvim/plugged')
 
 " theme
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-" Plug 'datwaft/bubbly.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 
 " QOL
@@ -190,19 +189,11 @@ nmap <leader>nn :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '>
 set termguicolors
 set background=dark
 let g:catppuccin_flavour = "mocha"
-colorscheme catppuccin
-
-" hi Normal guibg=#24262e
-" hi Normal guibg=#1c1e24
-" hi Normal guifg=NONE guibg=NONE
-" hi String guifg=#5b626f
-" hi EndOfBuffer guifg=#1c1e24 guibg=#1c1e24
-" hi StatusLine guifg=#bbc2cf guibg=#1c1e24
-" hi MatchParen guifg=#111111 guibg=#b1b1b1
 
 " cursor style
 " set guicursor=n-c-i-ci-ve:ver25-blinkwait300-blinkon200-blinkoff150,r-cr-o:hor20
 
+" remove tildes at end of buffer and hyphens in diff view (note the space at the end)
 set fillchars=eob:\ ,diff:\ 
 
 
@@ -276,83 +267,29 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 let g:coc_global_extensions = ['coc-pyright', 'coc-go', 'coc-json']
 
-lua << EOF
--- vim.g.bubbly_statusline = {
---     'paste',
---     'mode',
---     'path',
---     'branch',
---     'truncate',
---     'coc',
---     'divisor',
---     'filetype',
---     'progress',
--- }
--- vim.g.bubbly_palette = {
---   background = "Normal",
---   foreground = "Black",
---   black = "#000000",
---   red = "#f94144",
---   orange = "#FF5555", --"#e36414",
---   green = "#90be6d",
---   lightgreen = '#ecf39e',
---   yellow = "#f9dc5c",
---   blue = "#2196f3",
---   purple = "#1E3163", --"#003f88",
---   cyan = "#43aa8b",
---   white = "#ffffff",
---   lightgrey = "#adb5bd",
---   darkgrey = "#7f8490",
---       background = "#1a1b26",
---       foreground = "#c0caf5",
---       black = "#15161E",
---       red = "#f7768e",
---       green = "#9ece6a",
---       yellow = "#e0af68",
---       blue = "#7aa2f7",
---       purple = "#bb9af7",
---       cyan = "#7dcfff",
---       white = "#a9b1d6",
---       lightgrey = "#57595e",
---       darkgrey = "#404247",
--- }
--- vim.g.bubbly_colors = {
---     paste = 'purple',
---     mode = {
---         normal = { background = 'orange', foreground = 'white' },
---         insert = { background = 'blue', foreground = 'white' },
---         visual = { background = 'green', foreground = 'white' },
---         visualblock = { background = 'lightgreen', foreground = 'black' },
---         command = { background = 'purple', foreground = 'white' },
---         terminal = { background = 'darkgrey', foreground = 'black' },
---         replace = { background = 'red', foreground = 'black' },
---         default = 'white'
---     },
---     path = { path = { background = 'purple', foreground = 'white' } },
---     branch = { background = 'darkgrey', foreground = 'black' },
---     filetype = { background = 'purple', foreground = 'white' },
---     coc = {
---         error = 'red',
---         warning = 'orange',
---     },
---     progress = {
---         rowandcol = { background = 'darkgrey', foreground = 'black' },
---         percentage = { background = 'lightgrey', foreground = 'black' },
---     },
--- }
--- vim.g.bubbly_inactive_color = { background = 'black', foreground = 'lightgrey' }
 
--- Theme config
+" ---------------------------------------------------------------------------------------------------------------------
+"                                  Lua Heredoc
+" ---------------------------------------------------------------------------------------------------------------------
+
+
+lua << EOF
+---- Theme config
+local cp_palette = require("catppuccin.palettes").get_palette()
 require("catppuccin").setup({
     dim_inactive = { enabled = true },
     integrations = { coc_nvim = true },
+    custom_highlights = {
+      WinSeparator = { fg = cp_palette.blue },
+    },
 })
+vim.cmd [[colorscheme catppuccin]]
 
--- Statusline config
+
+---- Statusline config
 
 -- Alter theme to change color of the middle portion (lualine_c) to corresponding mode color
 -- reference: https://github.com/catppuccin/nvim/blob/main/lua/lualine/themes/catppuccin.lua
-local cp_palette = require("catppuccin.palettes").get_palette()
 local custom_cp = require('lualine.themes.catppuccin')
 -- match leftmost portion to middle portion in normal mode
 custom_cp.normal.a  = { bg = custom_cp.normal.c.bg,  fg = custom_cp.normal.c.fg,  gui = 'bold' }
