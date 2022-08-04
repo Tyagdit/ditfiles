@@ -25,6 +25,8 @@ export EDITOR="nvim"
 export MANROFFOPT="-c"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+export BAT_THEME="Dracula"
+
 export LESSHISTFILE="$XDG_CACHE_HOME/.lesshst"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 
