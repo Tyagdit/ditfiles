@@ -4,6 +4,7 @@ return {
     hide_tab_bar_if_only_one_tab = true,
     scrollback_lines = 10000,
     audible_bell = "Disabled",
+    -- term = "wezterm",
 
     -- Startup
     default_prog = { "wsl", "-d", "fedora-34", "--cd", "~" },
@@ -23,12 +24,10 @@ return {
     }),
     line_height = 1.15,
     font_size = 16,
+    harfbuzz_features = { "calt=0", "clig=0", "liga=0" },  -- disable ligatures
 
     -- Theming
-    colors = require("colors/catppuccin").setup({
-        sync = false,
-        flavour = "mocha"
-    }),
+    color_scheme = 'Catppuccin Mocha',
     default_cursor_style = "SteadyBlock",
 }
 
