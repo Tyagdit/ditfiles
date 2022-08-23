@@ -25,10 +25,11 @@ alias gdiff="git diff --name-only --diff-filter=d | xargs bat --diff"
 
 
 # Python
+export PYTHON_VERSION="3.10"
 alias act="source venv/bin/activate"
-alias py="python3 -q"
-alias python="python3 -q"
-alias pip="pip3"
+alias py="python$PYTHON_VERSION -q"
+alias python="python$PYTHON_VERSION -q"
+alias pip="python$PYTHON_VERSION -m pip"
 
 
 # WSL
