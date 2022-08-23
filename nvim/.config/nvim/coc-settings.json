@@ -1,61 +1,61 @@
 {
-    "suggest.disableMenuShortcut": true,
+    "outline.sortBy": "position",
+    "outline.splitCommand": "topleft 30vs",
+    "tree.key.toggle": "<Tab>",
+    "tree.key.activeFilter": "/",
+
+    "hover.floatConfig": { "border": true, "rounded": true },
+    "signature.floatConfig": { "border": true, "rounded": true },
+    "diagnostic.floatConfig": { "border": true, "rounded": true },
+    "suggest.floatConfig": { "border": true, "rounded": true },
     "suggest.completionItemKindLabels": {
-        "text": "",
-        "method": "method",
-        "function": "func",
-        "constructor": "func",
-        "field": "field",
-        "variable": "var",
-        "class": "cls",
-        "interface": "inter",
-        "module": "mod",
-        "property": "prop",
-        "unit": "unit",
-        "value": "val",
-        "enum": "enum",
-        "keyword": "keyword",
-        "snippet": "snip",
-        "color": "color",
-        "file": "file",
-        "reference": "ref",
-        "folder": "dir",
-        "enumMember": "member",
-        "constant": "const",
-        "struct": "struct",
-        "event": "event",
-        "operator": "op",
-        "typeParameter": "",
-        "default": ""
+        "text": " ",
+        "method": " ",
+        "constructor": " ",
+        "function": " ",
+        "field": "料",
+        "property": "料",
+        "variable": "v",
+        "class": " ",
+        "interface": " ",
+        "module": " ",
+        "unit": "塞",
+        "value": " ",
+        "enum": " ",
+        "keyword": " ",
+        "snippet": " ",
+        "color": " ",
+        "file": " ",
+        "reference": " ",
+        "folder": " ",
+        "enumMember": " ",
+        "constant": "c",
+        "struct": " ",
+        "event": " ",
+        "operator": " ",
+        "typeParameter": " ",
+        "default": " ",
     },
+
+    // Python
     "python.formatting.provider": "black",
-    /* "python.linting.mypyEnabled": true */
-    /* "languageserver": { */
-    /*     "efm": { */
-    /*         "command": "efm-langserver", */
-    /*         "args": [], */
-    /*         // custom config path */
-    /*         // "args": ["-c", "/path/to/your/config.yaml"], */
-    /*         "filetypes": ["python"], */
-    /*         "settings": { */
-    /*             "languages": { */
-    /*                 "python": [ */
-    /*                     { */
-    /*                         "lintCommand": "flake8 --stdin-display-name ${INPUT} -", */
-    /*                         "lintStdin": true, */
-    /*                         "lintFormats": [ "%f:%l:%c: %m" ] */
-    /*                     }, */
-    /*                     { */
-    /*                         "lintCommand": "mypy --show-column-numbers", */
-    /*                         "lintFormats": [ */
-    /*                             "%f:%l:%c: %trror: %m", */
-    /*                             "%f:%l:%c: %tarning: %m", */
-    /*                             "%f:%l:%c: %tote: %m" */
-    /*                         ] */
-    /*                     } */
-    /*                 ] */
-    /*             } */
-    /*         } */
-    /*     } */
-    /* } */
+
+    // Go
+    // can't tell if this works
+    "go.goplsOptions": {
+        "hints": {
+            "assignVariableTypes": true,
+            "compositeLiteralFields": true,
+            "compositeLiteralTypes": true,
+            "constantValues": true,
+            "functionTypeParameters": true,
+            "parameterNames": true,
+            "rangeVariableTypes": true,
+        },
+    },
+
+    // Lua
+    "Lua.telemetry.enable": false,
+    "sumneko-lua.enableNvimLuaDev": true,
 }
+

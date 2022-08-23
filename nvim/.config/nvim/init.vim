@@ -38,9 +38,9 @@ set laststatus=3            " Enable global statusline
 set mouse=a                 " enable mouse usage
 set undofile                " turn on persistent-undo
 set undodir=$XDG_DATA_HOME/nvim/undo//      " directory where the undo files will be stored
-set completeopt=menuone,noinsert,noselect   " completion menu options
+set completeopt=menuone,preview,noinsert,noselect   " completion menu options
 
-set backupcopy=yes          " use modelines instead (https://nichir.in/posts/vim-cant-edit-files/)
+set backupcopy=auto         " use modelines instead (https://nichir.in/posts/vim-cant-edit-files/)
 set hidden
 
 let mapleader=" "
@@ -82,7 +82,8 @@ call plug#end()     " does `filetype plugin indent on` and `syntax enable`
 
 " fzf config
 let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --exclude .git'
-let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.7, 'highlight': 'VertSplit' } }
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.9, 'highlight': 'WinSeparator' } }
+let g:fzf_preview_window = ['down:60%:border-top', 'ctrl-/']
 let g:fzf_action = {
 \   'ctrl-s': 'split',
 \   'ctrl-v': 'vsplit',
@@ -125,9 +126,20 @@ nnoremap G Gzz
 noremap N Nzz
 noremap n nzz
 
+" who needs autopair plugins
+imap () ()<Left>
+cmap () ()<Left>
+imap {} {}<Left>
+cmap {} {}<Left>
+imap [] []<Left>
+cmap [] []<Left>
+imap <> <><Left>
+cmap <> <><Left>
+
 " file navigation
 nnoremap \ <C-^>
-nmap <silent> \| :20Lexplore<CR>
+ nmap <silent> \| -
+" nmap <silent> \| :20Lexplore<CR>
 
 
 " to move lines up and down like in sublime
@@ -138,9 +150,8 @@ inoremap <silent> <C-K> <Esc>:m .-2<CR>==gi
 vnoremap <silent> <C-J> :m '>+1<CR>gv=gv
 vnoremap <silent> <C-K> :m '<-2<CR>gv=gv
 
-" mouse wheel - scroll 6 lines
-noremap <ScrollWheelUp>     6<C-Y>
-noremap <ScrollWheelDown>   6<C-E>
+noremap <S-Up> <C-Y>
+noremap <S-Down> <C-E>
 
 " move between splits and tmux panes with the same keys
 let g:tmux_navigator_no_mappings = 1
@@ -150,30 +161,28 @@ nnoremap <silent> <M-Up> :TmuxNavigateUp<cr>
 nnoremap <silent> <M-Right> :TmuxNavigateRight<cr>
 
 " resize splits
-nnoremap <silent> <M-k> :ObviousResizeUp 2<CR>
-nnoremap <silent> <M-j> :ObviousResizeDown 2<CR>
-nnoremap <silent> <M-h> :ObviousResizeLeft 2<CR>
-nnoremap <silent> <M-l> :ObviousResizeRight 2<CR>
+" nnoremap <silent> <M-k> :ObviousResizeUp 2<CR>
+" nnoremap <silent> <M-j> :ObviousResizeDown 2<CR>
+" nnoremap <silent> <M-h> :ObviousResizeLeft 2<CR>
+" nnoremap <silent> <M-l> :ObviousResizeRight 2<CR>
 
 " replace without yanking selected text
 vnoremap p "_dP
 
 " fzf
-nnoremap <silent> <leader>ff :FZF<CR>
-nnoremap <silent> <leader>fh :FZF ~<CR>
+nnoremap <silent> <leader>ff :Files<CR>
+nnoremap <silent> <leader>fh :Files ~<CR>
 nnoremap <silent> <leader>fl :BLines<CR>
+nnoremap <silent> <leader>fs :Rg<CR>
+nnoremap <silent> <leader>fr :History<CR>
 
 " open terminal in a split
 nmap <silent> <leader>ts :botright 9split term://bash<CR>
 nmap <silent> <leader>tv :botright 60vsplit term://bash<CR>
 
-" use tab for completion
-" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 " open and reload vimrc
 nnoremap <silent> <leader>v :edit $MYVIMRC<CR>
-nnoremap <leader>r :source $MYVIMRC<CR>:noh<CR>
+nnoremap <silent> <leader>r :source $MYVIMRC<CR>:noh<CR>
 
 " find symbol group info under the cursor
 nmap <leader>nn :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -194,7 +203,7 @@ let g:catppuccin_flavour = "mocha"
 " set guicursor=n-c-i-ci-ve:ver25-blinkwait300-blinkon200-blinkoff150,r-cr-o:hor20
 
 " remove tildes at end of buffer and hyphens in diff view (note the space at the end)
-set fillchars=eob:\ ,diff:\ 
+set fillchars=eob:\ ,diff:╱
 
 
 " ---------------------------------------------------------------------------------------------------------------------
@@ -206,8 +215,9 @@ set fillchars=eob:\ ,diff:\
 let g:netrw_browsex_viewer="wslview"
 " file browser options
 let g:netrw_liststyle=3         " tree style listing
+let g:netrw_altfile=1           " dont count netrw buffer for altfile switching
 " cant change the tree character
-hi netrwTreeBar guibg=#555555 guifg=#555555
+" hi netrwTreeBar guibg=#555555 guifg=#555555
 
 " open files in their last used position
 autocmd BufReadPost *
@@ -227,45 +237,81 @@ com! -range=% FormatJSON <line1>,<line2>!python3 -m json.tool
 " ---------------------------------------------------------------------------------------------------------------------
 
 
+function! s:float_documentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('definitionHover', 'float')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+function! s:preview_documentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('definitionHover', 'preview')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+nnoremap <silent> <S-k> :call <SID>float_documentation()<CR>
+nnoremap <silent> <M-k> :call <SID>preview_documentation()<CR>
+
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
+inoremap <silent><expr> <TAB>
+    \ coc#pum#visible() ? coc#pum#next(1) :
+    \ coc#jumpable() ? coc#snippet#next() :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ coc#refresh()
+inoremap <silent><expr> <S-TAB>
+    \ coc#pum#visible() ? coc#pum#prev(1) :
+    \ coc#jumpable() ? coc#snippet#prev() :
+    \ "\<C-h>"
+inoremap <silent><expr> <CR>
+    \ pumvisible() ? coc#_select_confirm() :
+    \ coc#pum#visible() ? coc#pum#confirm() :
+    \ "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" scroll floats/popups in insert mode
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+
+inoremap <silent><expr> <c-space> coc#refresh()
+
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gr <Plug>(coc-references)
+nmap <silent> <leader>g[ <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>g] <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>e  <Plug>(coc-diagnostic-info)
+nmap <silent> <leader>c  <Plug>(coc-codeaction-line)
+nmap <silent> <leader>rn <Plug>(coc-rename)
+nmap <silent> <leader>rf <Plug>(coc-refactor)
+" use gq with the formatwexpr autocmd up ahead
+" nmap <silent> <leader>f  <Plug>(coc-format-selected)
+" xmap <silent> <leader>f  <Plug>(coc-format-selected)
+
+nnoremap <silent> _  :call <SID>toggle_outline()<CR>
+function! s:toggle_outline() abort
+  let winid = coc#window#find('cocViewId', 'OUTLINE')
+  if winid == -1
+    call CocActionAsync('showOutline', 1)
   else
-    execute '!' . &keywordprg . " " . expand('<cword>')
+    call coc#window#close(winid)
   endif
 endfunction
 
-inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <silent><expr> <cr>
-    \ pumvisible() ? coc#_select_confirm() :
-    \ "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+augroup CocAuGroup
+  autocmd!
+  autocmd FileType go,python,lua,json setl formatexpr=CocAction('formatSelected')
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
-nmap <silent> gd         <Plug>(coc-definition)
-nmap <silent> gr         <Plug>(coc-references)
-nmap <silent> <leader>[  <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>]  <Plug>(coc-diagnostic-next)
-nmap <silent> <leader>e  <plug>(coc-diagnostic-info)
-nmap <silent> <leader>c  <plug>(coc-codeaction-line)
-nmap <silent> <leader>rn <Plug>(coc-rename)
-nmap <silent> <leader>f  <Plug>(coc-format-selected)
-xmap <silent> <leader>f  <Plug>(coc-format-selected)
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-let g:coc_global_extensions = ['coc-pyright', 'coc-go', 'coc-json']
+let g:coc_global_extensions = ['coc-pyright', 'coc-go', 'coc-json', 'coc-sumneko-lua']
 
 
 " ---------------------------------------------------------------------------------------------------------------------
@@ -277,10 +323,12 @@ lua << EOF
 ---- Theme config
 local cp_palette = require("catppuccin.palettes").get_palette()
 require("catppuccin").setup({
-    dim_inactive = { enabled = true },
+    dim_inactive = { enabled = true, percentage = 0.01 },
     integrations = { coc_nvim = true },
     custom_highlights = {
       WinSeparator = { fg = cp_palette.blue },
+      CocFloating = { bg = cp_palette.base },
+      CocInlayHint = { fg = cp_palette.surface2, style = { 'bold', 'italic' } },
     },
 })
 vim.cmd [[colorscheme catppuccin]]
@@ -314,6 +362,7 @@ require('lualine').setup {
         icons_enabled = false,
         component_separators = '┃',
         section_separators = '',
+        refresh = { statusline = 50 }
     },
     sections = {
         lualine_a = {},
@@ -322,7 +371,7 @@ require('lualine').setup {
             {
                 'filename',
                 path = 1,  -- relative path
-                symbols = { modified = ' +', readonly = ' RO' }
+                symbols = { modified = ' +', readonly = ' RO', unnamed = '' }
             },
             {
                 'diagnostics',
