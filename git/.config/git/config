@@ -1,6 +1,10 @@
 [user]
-	email = tyagdit@gmail.com
 	name = Tyagraj Desigar
+	useConfigOnly = true
+[includeIf "gitdir:~/unifize/"]
+	path = "./unifize_config"
+[includeIf "gitdir:~/personal/"]
+	path = "./personal_config"
 [core]
 	editor = nvim
 [diff]
