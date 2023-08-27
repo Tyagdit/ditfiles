@@ -15,6 +15,13 @@ fi
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
 
+# append to history instead of overwriting
+shopt -s histappend
+
+# save history every time the prompt is drawn so commands from all terminals
+# are saved when multiple terminals are open
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
@@ -39,3 +46,7 @@ PS1='\[\033[0;35m\]`parse_git_branch`\[\033[00m\]${debian_chroot:+($debian_chroo
 [ -f $XDG_CONFIG_HOME/bash/.secrets ] && source $XDG_CONFIG_HOME/bash/.secrets
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+
+export NVM_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nvm"
+[ -f "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -f "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

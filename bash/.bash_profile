@@ -43,6 +43,9 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
     export VAGRANT_WSL_DISABLE_VAGRANT_HOME="1"
     export VAGRANT_HOME="/mnt/c/Users/Aditya Desigar/vagrant"
     export VAGRANT_DEFAULT_PROVIDER="hyperv"
+
+    # set the path to check docker binary in Rancher Desktop's installation before Docker Desktop's
+    export PATH="/mnt/c/Program Files/Rancher Desktop/resources/resources/linux/bin/:/mnt/c/Program Files/Docker/Docker/resources/bin:$PATH"
 fi
 
 

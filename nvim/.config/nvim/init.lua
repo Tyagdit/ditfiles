@@ -1,4 +1,4 @@
--- NeoVim 0.8.0
+-- NeoVim 0.9.0
 
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ vim.opt.backupcopy = "auto"         -- use modelines instead (https://nichir.in/
 vim.opt.hidden = true
 
 vim.g.mapleader = " "
-vim.g.python3_host_prog = "/usr/bin/python3"
+vim.g.python3_host_prog = "/usr/bin/python3.10"
 
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -411,7 +411,7 @@ require("catppuccin").setup({
     -- treesitter = true,
   },
   highlight_overrides = {
-    mocha = function(colors)
+    all = function(colors)
       return {
         WinSeparator = { fg = colors.blue },
         NvimTreeNormal = { bg = colors.base },
