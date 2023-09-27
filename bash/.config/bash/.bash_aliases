@@ -27,7 +27,7 @@ alias gdiff="git diff --name-only --diff-filter=d | xargs bat --diff"
 
 
 # Python
-export PYTHON_VERSION="3.10"
+export PYTHON_VERSION="3.11"
 alias act="source venv/bin/activate"
 alias py="python$PYTHON_VERSION -q"
 alias python="python$PYTHON_VERSION -q"
