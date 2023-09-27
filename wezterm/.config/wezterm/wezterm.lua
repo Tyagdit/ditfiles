@@ -7,7 +7,7 @@ return {
     -- term = "wezterm",
 
     -- Startup
-    default_prog = { "wsl", "-d", "fedora-34", "--cd", "~" },
+    -- default_prog = { "wsl", "-d", "fedora-34", "--cd", "~" },
 
     -- Window appearance
     window_decorations = "RESIZE",
@@ -21,7 +21,7 @@ return {
     -- Font
     font = wezterm.font_with_fallback({
         -- { family = 'Minecraft Mono' },  -- https://github.com/IdreesInc/Monocraft
-        { family = 'Cascadia Mono', weight = 'DemiLight' },
+        -- { family = 'Cascadia Mono', weight = 'DemiLight' },
     }),
     line_height = 1.15,
     font_size = 16,
