@@ -1,4 +1,4 @@
-*.env
+# *.env
 
 # Docker Compose
 docker-compose.local.yml
