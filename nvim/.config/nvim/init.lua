@@ -81,8 +81,9 @@ keymap("v", "<INSERT>",         "<ESC>",       keymap_opts)
 keymap("t", "<INSERT>",         "<C-\\><C-N>", keymap_opts)
 keymap("n", "<ENTER>",          ":w<CR>",      keymap_opts)
 keymap("n", "<BACKSPACE>",      ":q<CR>",      keymap_opts)
-keymap("n", "<C-h>",            ":qa<CR>",     keymap_opts)
+keymap("n", "<C-h>",            ":qa!<CR>",    keymap_opts)
 keymap("n", "<leader><leader>", ":",           keymap_opts)
+keymap("i", "<S-Del>",          "<C-o>dw",     keymap_opts)
 
 -- actually go to the end
 keymap("n", "0",        "g0",      keymap_opts)
@@ -231,12 +232,12 @@ vim.fn["plug#end"]()     -- does `filetype plugin indent on` and `syntax enable`
 
 -- fzf setup
 vim.env.FZF_DEFAULT_COMMAND = "fd --type f --hidden --exclude .git"
-vim.g.fzf_preview_window = { "down:60%:border-top", "ctrl-/" }
+vim.g.fzf_preview_window = { "down:60%:bottom,border", "ctrl-/" }
 vim.g.fzf_layout = {
   window = {
     width = 0.8,
     height = 0.9,
-    highlight = "WinSeparator"
+    highlight = "WinSeparator",
   }
 }
 vim.g.fzf_action = {
@@ -319,7 +320,7 @@ require("nvim-tree").setup({
     enable = true,
   },
   git = {
-    enable = false,
+    enable = true,
   },
 })
 
@@ -461,7 +462,7 @@ vim.cmd("colorscheme catppuccin")
 ---------------------------------------------------------------------------------------------------------------------
 
 
-vim.g.coc_global_extensions = {"coc-pyright", "coc-go", "coc-json", "coc-sumneko-lua", "@yaegassy/coc-ansible"}
+vim.g.coc_global_extensions = {"coc-pyright", "coc-go", "coc-json", "coc-yaml", "coc-sumneko-lua", "@yaegassy/coc-ansible"}
 vim.g.coc_filetype_map = { ["yaml.ansible"] = "ansible" }
 
 function _G.float_documentation()
