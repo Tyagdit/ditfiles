@@ -1,6 +1,7 @@
 local wezterm = require('wezterm')
 return {
     -- General options
+    hide_mouse_cursor_when_typing = false,
     hide_tab_bar_if_only_one_tab = true,
     scrollback_lines = 10000,
     audible_bell = "Disabled",
@@ -24,7 +25,7 @@ return {
         -- { family = 'Cascadia Mono', weight = 'DemiLight' },
     }),
     line_height = 1.15,
-    font_size = 16,
+    font_size = 13,
     harfbuzz_features = { "calt=0", "clig=0", "liga=0" },  -- disable ligatures
 
     -- Theming
