@@ -302,7 +302,7 @@ end
 
 require("nvim-tree").setup({
   hijack_netrw = true,
-  hijack_cursor = true,
+  hijack_cursor = false,
   on_attach = nvim_tree_on_attach,
   view = {
     centralize_selection = true,
