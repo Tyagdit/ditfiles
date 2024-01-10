@@ -247,11 +247,27 @@ vim.g.fzf_action = {
 
 -- indent blankline Setup
 -- vim.opt.colorcolumn = "500"  -- https://github.com/lukas-reineke/indent-blankline.nvim/issues/59#issuecomment-806374954
-vim.g.indent_blankline_char_list = { "▎", "▏" }
-vim.g.indent_blankline_show_first_indent_level = false
-vim.g.indent_blankline_filetype_exclude = {"help"}
-vim.g.indent_blankline_buftype_exclude = {"terminal"}
-vim.g.indent_blankline_show_trailing_blankline_indent = false
+require("ibl").setup({
+  indent = {
+    -- char = { "┆", "┇", },
+    -- char = { "▎", "▏", },
+    char = { "┃", "│", },
+    smart_indent_cap = true,
+  },
+  whitespace = {
+    remove_blankline_trail = true,
+  },
+  exclude = {
+    filetypes = { "help" },
+    buftypes = { "terminal" },
+  }
+})
+
+local indent_blankline_hooks = require("ibl.hooks")
+indent_blankline_hooks.register(
+  indent_blankline_hooks.type.WHITESPACE,
+  indent_blankline_hooks.builtin.hide_first_space_indent_level
+)
 
 -- nvim-tree Setup
 vim.g.loaded_netrw = 1
