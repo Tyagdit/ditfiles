@@ -18,7 +18,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 
 export HISTFILE="$XDG_STATE_HOME/.bash_history"
 export HISTSIZE=9000
-export HISTFILESIZE=9000
+export HISTFILESIZE=90000
 export HISTCONTROL=ignoreboth
 
 export EDITOR="nvim"
@@ -47,6 +47,9 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
     # set the path to check docker binary in Rancher Desktop's installation before Docker Desktop's
     export PATH="/mnt/c/Program Files/Rancher Desktop/resources/resources/linux/bin/:/mnt/c/Program Files/Docker/Docker/resources/bin:$PATH"
 fi
+
+export KREW_ROOT="$XDG_STATE_HOME/krew"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 
 if [ -f ~/.bashrc ]; then

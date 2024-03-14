@@ -23,6 +23,7 @@ return {
     font = wezterm.font_with_fallback({
         -- { family = 'Minecraft Mono' },  -- https://github.com/IdreesInc/Monocraft
         -- { family = 'Cascadia Mono', weight = 'DemiLight' },
+        -- { family = 'FiraMono Nerd Font Mono' },
     }),
     line_height = 1.15,
     font_size = 13,
