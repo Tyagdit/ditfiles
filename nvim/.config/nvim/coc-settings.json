@@ -61,6 +61,13 @@
     },
 
     // Lua
+    "Lua.misc.parameters": [
+        "--metapath",
+        "$XDG_CACHE_HOME/sumneko_lua/meta",
+        "--logpath",
+        "$XDG_CACHE_HOME/sumneko_lua/log"
+    ],
+    "sumneko-lua.serverDir": "/run/current-system/sw/share/lua-language-server",  // NixOS specific thing
     "sumneko-lua.enableNvimLuaDev": true,
     // idk what this is but it keeps pestering me when i open a new file or
     // keeps making "./.vim/coc-settings.json" everywhere if i say "don't show again"
@@ -85,6 +92,7 @@
 
     // yaml
     "yaml.schemas": {
-        "kubernetes": ["/*.yaml"]
+        "https://json.schemastore.org/github-workflow.json": ["/.github/workflows/*.yaml"],
+        // "kubernetes": ["/*.yaml"],
     },
 }
