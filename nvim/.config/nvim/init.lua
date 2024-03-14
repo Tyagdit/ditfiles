@@ -279,64 +279,115 @@ local function nvim_tree_on_attach(bufnr)
     return { desc = "nvim-tree: "..desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
   end
 
-  keymap("n", "<CR>",    nvim_tree.node.open.edit,               nvim_tree_keymap_opts("Open"))
-  keymap("n", "<Right>", nvim_tree.node.open.edit,               nvim_tree_keymap_opts("Open"))
-  keymap("n", "<Left>",  nvim_tree.node.navigate.parent_close,   nvim_tree_keymap_opts("Close Directory"))
-  keymap("n", "<C-l>",   nvim_tree.tree.reload,                  nvim_tree_keymap_opts("Refresh"))
-  keymap("n", "i",       nvim_tree.fs.create,                    nvim_tree_keymap_opts("Create"))
-  keymap("n", "a",       nvim_tree.fs.create,                    nvim_tree_keymap_opts("Create"))
-  keymap("n", "d",       nvim_tree.fs.remove,                    nvim_tree_keymap_opts("Delete"))
-  keymap("n", "r",       nvim_tree.fs.rename,                    nvim_tree_keymap_opts("Rename"))
-  keymap("n", "x",       nvim_tree.fs.cut,                       nvim_tree_keymap_opts("Cut"))
-  keymap("n", "c",       nvim_tree.fs.copy.node,                 nvim_tree_keymap_opts("Copy"))
-  keymap("n", "p",       nvim_tree.fs.paste,                     nvim_tree_keymap_opts("Paste"))
-  keymap("n", "y",       nvim_tree.fs.copy.filename,             nvim_tree_keymap_opts("Copy Name"))
-  keymap("n", "Y",       nvim_tree.fs.copy.relative_path,        nvim_tree_keymap_opts("Copy Relative Path"))
-  keymap("n", "<Tab>",   nvim_tree.marks.toggle,                 nvim_tree_keymap_opts("Toggle Bookmark"))
-  keymap("n", "m",       nvim_tree.marks.bulk.move,              nvim_tree_keymap_opts("Move Bookmarked"))
-  keymap("n", "<Esc>",   nvim_tree.tree.close,                   nvim_tree_keymap_opts("Close"))
-  keymap("n", "<BS>",    nvim_tree.tree.close,                   nvim_tree_keymap_opts("Close"))
-  keymap("n", "<F1>",    nvim_tree.tree.toggle_help,             nvim_tree_keymap_opts("Help"))
-  keymap("n", "I",       nvim_tree.tree.toggle_gitignore_filter, nvim_tree_keymap_opts('Toggle Git Ignore'))
+  keymap("n", "-",         nvim_tree.tree.change_root_to_parent,   nvim_tree_keymap_opts("Up"))
+  keymap("n", "zz",        nvim_tree.tree.change_root_to_node,     nvim_tree_keymap_opts("CD"))
+  keymap("n", "<CR>",      nvim_tree.node.open.edit,               nvim_tree_keymap_opts("Open"))
+  keymap("n", "<Right>",   nvim_tree.node.open.edit,               nvim_tree_keymap_opts("Open"))
+  keymap("n", "<Left>",    nvim_tree.node.navigate.parent_close,   nvim_tree_keymap_opts("Close Directory"))
+  keymap("n", "<S-Right>", nvim_tree.node.navigate.sibling.last,   nvim_tree_keymap_opts("Go To Last Sibling"))
+  keymap("n", "<S-Left>",  nvim_tree.node.navigate.sibling.first,  nvim_tree_keymap_opts("Go To First Sibling"))
+  keymap("n", "<End>",     "G",                                    nvim_tree_keymap_opts("G"))
+  keymap("n", "<Home>",    "gg",                                   nvim_tree_keymap_opts("gg"))
+  keymap("n", "<C-l>",     nvim_tree.tree.reload,                  nvim_tree_keymap_opts("Refresh"))
+  keymap("n", "i",         nvim_tree.fs.create,                    nvim_tree_keymap_opts("Create"))
+  keymap("n", "a",         nvim_tree.fs.create,                    nvim_tree_keymap_opts("Create"))
+  keymap("n", "d",         nvim_tree.fs.remove,                    nvim_tree_keymap_opts("Delete"))
+  keymap("n", "r",         nvim_tree.fs.rename,                    nvim_tree_keymap_opts("Rename"))
+  keymap("n", "x",         nvim_tree.fs.cut,                       nvim_tree_keymap_opts("Cut"))
+  keymap("n", "c",         nvim_tree.fs.copy.node,                 nvim_tree_keymap_opts("Copy"))
+  keymap("n", "p",         nvim_tree.fs.paste,                     nvim_tree_keymap_opts("Paste"))
+  keymap("n", "y",         nvim_tree.fs.copy.filename,             nvim_tree_keymap_opts("Copy Name"))
+  keymap("n", "Y",         nvim_tree.fs.copy.relative_path,        nvim_tree_keymap_opts("Copy Relative Path"))
+  keymap("n", "<Tab>",     nvim_tree.marks.toggle,                 nvim_tree_keymap_opts("Toggle Bookmark"))
+  keymap("n", "m",         nvim_tree.marks.bulk.move,              nvim_tree_keymap_opts("Move Bookmarked"))
+  keymap("n", "<Esc>",     nvim_tree.tree.close,                   nvim_tree_keymap_opts("Close"))
+  keymap("n", "<BS>",      nvim_tree.tree.close,                   nvim_tree_keymap_opts("Close"))
+  keymap("n", "|",         nvim_tree.tree.close,                   nvim_tree_keymap_opts("Close"))
+  keymap("n", "<F1>",      nvim_tree.tree.toggle_help,             nvim_tree_keymap_opts("Help"))
+  keymap("n", "I",         nvim_tree.tree.toggle_gitignore_filter, nvim_tree_keymap_opts("Toggle Git Ignore"))
+  keymap("n", "<S-k>",     nvim_tree.node.show_info_popup,         nvim_tree_keymap_opts("File Info"))
 end
+
+local nvim_tree_float_height_ratio = 0.8
+local nvim_tree_float_width_ratio = 0.3
 
 require("nvim-tree").setup({
   hijack_netrw = true,
   hijack_cursor = false,
+  select_prompts = true,
   on_attach = nvim_tree_on_attach,
   view = {
     centralize_selection = true,
+    signcolumn = "yes",
     float = {
       enable = true,
-       open_win_config = {
-         relative = "editor",
-         border = "rounded",
-         width = 53,
-         height = 26,
-         row = 2,
-         col = 39,
-       }
+      open_win_config = function()
+        local screen_w = vim.opt.columns:get()
+        local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+        local window_w = screen_w * nvim_tree_float_width_ratio
+        local window_h = screen_h * nvim_tree_float_height_ratio
+        local window_w_int = math.floor(window_w)
+        local window_h_int = math.floor(window_h)
+        local center_x = (screen_w - window_w) / 2
+        local center_y = ((vim.opt.lines:get() - window_h) / 2) - vim.opt.cmdheight:get()
+
+        return {
+          border = 'rounded',
+          relative = 'editor',
+          row = center_y,
+          col = center_x,
+          width = window_w_int,
+          height = window_h_int,
+        }
+      end,
     },
   },
   renderer = {
     add_trailing = true,
+    -- indent_width = 4,
     indent_markers = {
       enable = true,
+      inline_arrows = false,
+      icons = {
+        item = "├",
+        corner = "╰",
+      }
     },
     icons = {
-      webdev_colors = false,
+      -- web_devicons = {
+      --   file = {
+      --     enable = true,
+      --   },
+      --   folder = {
+      --     enable = true,
+      --   },
+      -- },
+      git_placement = "signcolumn",
+      diagnostics_placement = "after",
+      modified_placement = "before",
       show = {
         file = false,
         folder = false,
         folder_arrow = false,
+        git = true,
+        modified = true,
+      },
+      glyphs = {
+        modified = "+",
       }
     },
   },
   diagnostics = {
     enable = true,
+    show_on_open_dirs = false,
   },
   git = {
     enable = true,
+    show_on_open_dirs = false,
+  },
+  modified = {
+    enable = true,
+    show_on_open_dirs = false,
   },
 })
 
@@ -432,6 +483,7 @@ require("catppuccin").setup({
       return {
         WinSeparator = { fg = colors.blue },
         NvimTreeNormal = { bg = colors.base },
+        NvimTreeNormalFloat = { bg = colors.base },
         CocFloating = { bg = colors.base },
         CocInlayHint = { fg = colors.surface0, style = { "underline", "italic" } },
       }
