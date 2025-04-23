@@ -34,13 +34,19 @@ function parse_git_branch {
 	BRANCH=`git branch --show-current 2> /dev/null`
 	if [ ! "${BRANCH}" == "" ]
 	then
-		echo "[${BRANCH}]"
+		echo "[git: ${BRANCH}]"
 	else
 		echo ""
 	fi
 }
 
-PS1='\[\033[0;35m\]`parse_git_branch`\[\033[00m\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+. $XDG_DATA_HOME/kube-ps1/kube-ps1.sh
+# KUBE_PS1_SYMBOL_ENABLE=false
+_KUBE_PS1_SYMBOL_DEFAULT=k8s
+KUBE_PS1_SEPARATOR=": "
+KUBE_PS1_DIVIDER="|"
+
+PS1='$(kube_ps1) \[\033[0;35m\]`parse_git_branch` \[\033[00m\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 [ -f $XDG_CONFIG_HOME/bash/.bash_aliases ] && source $XDG_CONFIG_HOME/bash/.bash_aliases
 [ -f $XDG_CONFIG_HOME/bash/.secrets ] && source $XDG_CONFIG_HOME/bash/.secrets
