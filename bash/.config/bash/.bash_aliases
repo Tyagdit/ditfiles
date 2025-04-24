@@ -34,6 +34,17 @@ alias python="python$PYTHON_VERSION -q"
 alias pip="python$PYTHON_VERSION -m pip"
 
 
+# K8s
+alias k="kubectl"
+complete -o default -F __start_kubectl k
+
+alias kg="k get"
+alias kw="watch k get"
+alias kd="k describe"
+alias kl="k logs"
+alias kx="k exec -it"
+
+
 # WSL
 alias open="wslview"
 alias cdwin="cd $USERPROFILE/Desktop"
