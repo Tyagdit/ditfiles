@@ -31,7 +31,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true       -- enable relative line numbering
 vim.opt.scrolloff = 8
 vim.opt.siso = 5                    -- offsets for scrolling
-vim.opt.pastetoggle = "<F10>"       -- paste mode to allow for pasting multiline stuff without messing it up
+-- vim.opt.pastetoggle = "<F10>"       -- paste mode to allow for pasting multiline stuff without messing it up
 vim.opt.shortmess:append("IcS")     -- dont show info or warnings when using completion; disable intro; disable search count
 vim.opt.formatoptions:remove("o")   -- change auto formating of comments (doesn't work always due to filetype after-plugins)
 vim.opt.signcolumn = "yes"          -- show sign column in number column
@@ -210,7 +210,7 @@ vim.fn["plug#begin"]("$XDG_CONFIG_HOME/nvim/plugged")
 
   -- QOL
   -- Plug("talek/obvious-resize")
-  Plug("tpope/vim-commentary")
+  -- Plug("tpope/vim-commentary")
   Plug("tpope/vim-surround")
   Plug("sheerun/vim-polyglot")
   Plug("christoomey/vim-tmux-navigator")
@@ -228,10 +228,14 @@ vim.fn["plug#begin"]("$XDG_CONFIG_HOME/nvim/plugged")
 
   -- IDE stuff
   Plug("neoclide/coc.nvim", {branch = "release"})
+  -- Plug('Olical/conjure')
 vim.fn["plug#end"]()     -- does `filetype plugin indent on` and `syntax enable`
 
 -- fzf setup
 vim.env.FZF_DEFAULT_COMMAND = "fd --type f --hidden --exclude .git"
+vim.g.fzf_vim = {
+  rg_options = "--delimiter ':' --nth 4.."
+}
 vim.g.fzf_preview_window = { "down:60%:bottom,border", "ctrl-/" }
 vim.g.fzf_layout = {
   window = {
@@ -530,7 +534,7 @@ vim.cmd("colorscheme catppuccin")
 ---------------------------------------------------------------------------------------------------------------------
 
 
-vim.g.coc_global_extensions = {"coc-pyright", "coc-go", "coc-json", "coc-yaml", "coc-sumneko-lua", "@yaegassy/coc-ansible"}
+vim.g.coc_global_extensions = {"coc-pyright", "coc-go", "coc-json", "coc-yaml", "coc-sumneko-lua", "@yaegassy/coc-ansible", "coc-sh"}
 vim.g.coc_filetype_map = { ["yaml.ansible"] = "ansible" }
 
 function _G.float_documentation()
@@ -638,6 +642,8 @@ vim.api.nvim_create_autocmd("User",
     command = "call CocActionAsync('showSignatureHelp')",
   }
 )
+
+-- vim.g["conjure#mapping#eval_current_form"] = "t"
 
 -- vim.api.nvim_create_autocmd("CursorHold",
 --   {
