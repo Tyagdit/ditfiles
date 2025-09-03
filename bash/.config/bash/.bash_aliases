@@ -17,6 +17,7 @@ alias plz="sudo !!"
 
 alias vv="nvim $XDG_CONFIG_HOME/nvim/"
 alias vb="nvim $HOME/.bashrc"
+vt() { nvim $(mktemp --suffix ${1:-.txt}); }
 alias htop="htop --tree"
 alias dock="docker"
 alias dc="docker-compose"
@@ -37,12 +38,6 @@ alias pip="python$PYTHON_VERSION -m pip"
 # K8s
 alias k="kubectl"
 complete -o default -F __start_kubectl k
-
-alias kg="k get"
-alias kw="watch k get"
-alias kd="k describe"
-alias kl="k logs"
-alias kx="k exec -it"
 
 
 # WSL

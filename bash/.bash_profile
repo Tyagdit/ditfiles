@@ -48,6 +48,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
     export PATH="/mnt/c/Program Files/Rancher Desktop/resources/resources/linux/bin/:/mnt/c/Program Files/Docker/Docker/resources/bin:$PATH"
 fi
 
+export KUBECTL_KUBERC=true
 export KREW_ROOT="$XDG_STATE_HOME/krew"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
