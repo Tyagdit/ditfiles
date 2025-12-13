@@ -1,0 +1,5 @@
+hotKeys:
+  "Shift-\\":
+    shortCut: "Shift-\\"
+    description: Choose namespace
+    command: ns
