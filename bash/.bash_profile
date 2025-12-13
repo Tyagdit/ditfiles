@@ -17,8 +17,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 [ ! -d $XDG_CACHE_HOM ] && mkdir -p $XDG_CACHE_HOME
 
 export HISTFILE="$XDG_STATE_HOME/.bash_history"
-export HISTSIZE=9000
-export HISTFILESIZE=90000
+export HISTSIZE=-1
+export HISTFILESIZE=-1
 export HISTCONTROL=ignoreboth
 
 export EDITOR="nvim"
