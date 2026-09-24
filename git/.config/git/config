@@ -29,6 +29,7 @@
     aadd = add -Av
     amend = commit --amend --no-edit
     ostatus = status -sb --ahead-behind
+    unstage = rm --cached
 [format]
     pretty = short
 [advice]

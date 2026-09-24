@@ -51,6 +51,10 @@ KUBE_PS1_SUFFIX=""
 PS1='(k8s: $(kube_ps1)) \[\033[0;35m\]`parse_git_branch` \[\033[00m\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 source <(kubectl completion bash)
+# command -v fzf >/dev/null 2>&1 && {
+# 	source <(kubectl completion bash | sed 's#"${requestComp}" 2>/dev/null#"${requestComp}" 2>/dev/null | head -n -1 | fzf  --multi=0 #g')
+# 	# source <(kubectl completion bash | sed -E 's#([[:space:]]+__kubectl_get_completion_results)$#\1 fzf#g')
+# }
 
 [ -f $XDG_CONFIG_HOME/bash/.bash_aliases ] && source $XDG_CONFIG_HOME/bash/.bash_aliases
 [ -f $XDG_CONFIG_HOME/bash/.secrets ] && source $XDG_CONFIG_HOME/bash/.secrets
@@ -60,3 +64,7 @@ source <(kubectl completion bash)
 export NVM_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nvm"
 [ -f "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -f "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+[[ $(command -v brew) ]] || export PATH="/opt/homebrew/bin:/home/linuxbrew/.linuxbrew/bin:/usr/local/bin"
+[[ $(command -v brew) ]] && eval "$(brew shellenv)"
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"

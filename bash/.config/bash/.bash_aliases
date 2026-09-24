@@ -1,8 +1,8 @@
 # Abbreviations
-alias l="exa -laF --group-directories-first"
-alias tree="exa -laF --group-directories-first --tree --level=2"
-alias lg="exa -laF --group-directories-first --git --git-ignore"
-alias treeg="exa -laF --group-directories-first --git --git-ignore --tree --level=2"
+alias l="eza -laF --group-directories-first"
+alias tree="eza -laF --group-directories-first --tree --level=2"
+alias lg="eza -laF --group-directories-first --git --git-ignore"
+alias treeg="eza -laF --group-directories-first --git --git-ignore --tree --level=2"
 
 alias ..="cd .."
 alias mkdir="mkdir -pv"
@@ -18,6 +18,7 @@ alias plz="sudo !!"
 alias vv="nvim $XDG_CONFIG_HOME/nvim/"
 alias vb="nvim $HOME/.bashrc"
 vt() { nvim $(mktemp --suffix ${1:-.txt}); }
+alias vd="nvim -d -O2"
 alias htop="htop --tree"
 alias dock="docker"
 alias dc="docker-compose"
@@ -28,7 +29,7 @@ alias gdiff="git diff --name-only --diff-filter=d | xargs bat --diff"
 
 
 # Python
-export PYTHON_VERSION="3.11"
+export PYTHON_VERSION="3.13"
 alias act="source venv/bin/activate"
 alias py="python$PYTHON_VERSION -q"
 alias python="python$PYTHON_VERSION -q"

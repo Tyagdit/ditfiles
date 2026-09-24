@@ -219,6 +219,8 @@ vim.fn["plug#begin"]("$XDG_CONFIG_HOME/nvim/plugged")
   -- Plug("nvim-treesitter/nvim-treesitter", {["do"] = ":TSUpdate"})
 
   -- file operations
+  -- Plug("junegunn/fzf", {["do"] = "fzf#install()" })
+  Plug("junegunn/fzf")
   Plug("junegunn/fzf.vim")
   -- Plug("tpope/vim-vinegar")  -- netrw is so goddamn buggy
   Plug("nvim-tree/nvim-tree.lua")
@@ -232,7 +234,7 @@ vim.fn["plug#begin"]("$XDG_CONFIG_HOME/nvim/plugged")
 vim.fn["plug#end"]()     -- does `filetype plugin indent on` and `syntax enable`
 
 -- fzf setup
-vim.env.FZF_DEFAULT_COMMAND = "fd --type f --hidden --exclude .git"
+vim.env.FZF_DEFAULT_COMMAND = "fd --type f --hidden --no-ignore --exclude .git --exclude node_modules"
 vim.g.fzf_vim = {
   rg_options = "--delimiter ':' --nth 4.."
 }
@@ -310,6 +312,30 @@ local function nvim_tree_on_attach(bufnr)
   keymap("n", "<F1>",      nvim_tree.tree.toggle_help,             nvim_tree_keymap_opts("Help"))
   keymap("n", "I",         nvim_tree.tree.toggle_gitignore_filter, nvim_tree_keymap_opts("Toggle Git Ignore"))
   keymap("n", "<S-k>",     nvim_tree.node.show_info_popup,         nvim_tree_keymap_opts("File Info"))
+
+  local git_add = function()
+    local node = nvim_tree.tree.get_node_under_cursor()
+    local gs = node.git_status.file
+
+    -- If the current node is a directory get children status
+    if gs == nil then
+      gs = (node.git_status.dir.direct ~= nil and node.git_status.dir.direct[1]) 
+           or (node.git_status.dir.indirect ~= nil and node.git_status.dir.indirect[1])
+    end
+
+    -- If the file is untracked, unstaged or partially staged, we stage it
+    if gs == "??" or gs == "MM" or gs == "AM" or gs == " M" then
+      vim.cmd("silent !git add " .. node.absolute_path)
+
+    -- If the file is staged, we unstage
+    elseif gs == "M " or gs == "A " then
+      vim.cmd("silent !git restore --staged " .. node.absolute_path)
+    end
+
+    nvim_tree.tree.reload()
+  end
+
+  keymap('n', 'ga', git_add, nvim_tree_keymap_opts('Git Stage/Unstage'))
 end
 
 local nvim_tree_float_height_ratio = 0.8
@@ -378,6 +404,9 @@ require("nvim-tree").setup({
       },
       glyphs = {
         modified = "+",
+        git = {
+          untracked = "?",
+        }
       }
     },
   },
@@ -399,7 +428,7 @@ require("nvim-tree").setup({
 -- Alter theme to change color of the middle portion (lualine_c) to corresponding mode color
 -- reference: https://github.com/catppuccin/nvim/blob/main/lua/lualine/themes/catppuccin.lua
 local cp_palette = require("catppuccin.palettes").get_palette()
-local custom_cp = require("lualine.themes.catppuccin")
+local custom_cp = require("lualine.themes.catppuccin-nvim")
 
 local cp_transparent_bg = require("catppuccin").options.transparent_background and "NONE" or cp_palette.mantle
 local b = { bg = cp_palette.surface1, fg = cp_palette.text }
@@ -534,7 +563,7 @@ vim.cmd("colorscheme catppuccin")
 ---------------------------------------------------------------------------------------------------------------------
 
 
-vim.g.coc_global_extensions = {"coc-pyright", "coc-go", "coc-json", "coc-yaml", "coc-sumneko-lua", "@yaegassy/coc-ansible", "coc-sh"}
+vim.g.coc_global_extensions = {"coc-pyright", "coc-go", "coc-json", "coc-yaml", "coc-sumneko-lua", "@yaegassy/coc-ansible", "coc-sh", "coc-tsserver"}
 vim.g.coc_filetype_map = { ["yaml.ansible"] = "ansible" }
 
 function _G.float_documentation()
